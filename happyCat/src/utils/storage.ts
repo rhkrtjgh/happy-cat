@@ -1,19 +1,26 @@
-//저장할 행운정보 타입 정의
-export type DailyFortune = {
-  score: number;
-  message: string;
+import type { EmotionType } from "../data/emotions";
+
+//저장할 행운과 기록정보 타입 정의  
+//기존 행운만 관리를 하다가 그날의 기록이라는 공통점이 있어 같이 관리하는게 좋겠다고 생각되어 합침.
+export type DailyRecord = {
+  score: number;          //행운점수
+  message: string;        //행운메시지
+  checkIn?: {             //출석체크 : 일상기록은 행운 기록 이후에 선택해야 해서 optional로 처리
+    emotion: EmotionType; //감정상태
+    memo?: string;        //일상 기록
+  }
 };
 
-const getFortuneKey = (date: string) => `fortune_${date}`;
+const getDailyRecordKey = (date: string) => `DailyRecord_${date}`;
 
-//세션에 행운정보를 저장한다.
-export const saveFortune = (date: string, fortune: DailyFortune) => {
-  localStorage.setItem(getFortuneKey(date), JSON.stringify(fortune));
+//세션에 오늘의 행운과 기록 정보를 저장한다.
+export const saveDailyRecord = (date: string, fortune: DailyRecord) => {
+  localStorage.setItem(getDailyRecordKey(date), JSON.stringify(fortune));
 };
 
-//세션에서 행운정보를 가져온다.
-export const getFortune = (date: string): DailyFortune | null => {
-  const data = localStorage.getItem(getFortuneKey(date));
+//세션에서 오늘의 행운과 기록정보를 가져온다.
+export const getFortune = (date: string): DailyRecord | null => {
+  const data = localStorage.getItem(getDailyRecordKey(date));
 
   if(!data){
     return null;
@@ -22,7 +29,21 @@ export const getFortune = (date: string): DailyFortune | null => {
   return JSON.parse(data);
 };
 
-//세션에 저장된 행운정보를 삭제한다.
+//세션에 저장된 그날의 기록과 행운정보를 삭제한다.
 export const removeFortune = (date: string) => {
-  localStorage.removeItem(getFortuneKey(date));
+  localStorage.removeItem(getDailyRecordKey(date));
+};
+
+//오늘의 기록정보를 저장
+export const saveCheckIn = (date: string,emotion: EmotionType,memo?: string) => {
+  const current = getFortune(date);
+
+  if (!current) return; //오늘의운세를 먼저 확인해야 기록 가능.
+
+  current.checkIn = {
+    emotion,
+    memo
+  };
+
+  saveDailyRecord(date, current);
 };

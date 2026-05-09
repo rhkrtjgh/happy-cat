@@ -4,14 +4,16 @@ import Cat from "./components/Cat";
 import FortuneContainer from "./components/FortuneContainer";
 
 import './App.css'
+import DailyCheckIn from "./components/DailyCheckIn";
 
 function App() {
 
   return (
     <div>
       <Header />
-      <Cat />
       <FortuneContainer />
+      <DailyCheckIn />
+      
     </div>
   )
 }

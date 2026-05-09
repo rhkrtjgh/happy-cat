@@ -2,7 +2,8 @@ import { useState } from 'react';
 import FortuneButton from './FortuneButton';
 import { fortunes } from '../data/fortunes';
 import { getTodayDate, formatKoreanDate } from '../utils/dateUtils';
-import { getFortune, saveFortune } from '../utils/storage';
+import { getFortune, saveDailyRecord } from '../utils/storage';
+import { fortuneStyles } from "../css/style/fortuneContainer";
 
 type Fortune = {
   score: number;
@@ -42,24 +43,51 @@ const FortuneContainer = () => {
       setFortune(fortuneResult);
 
       //로컬스토리지에 저장한다.
-      saveFortune(today,fortuneResult);
+      saveDailyRecord(today,fortuneResult);
     }
 
     
   };
 
   return (
-    <div>
-      <FortuneButton onClick={handleFortune} disabled={!!fortune} />
+    <section style={fortuneStyles.container}>
+      <div style={fortuneStyles.card}>
+        <div style={fortuneStyles.header}>
+          <span style={fortuneStyles.icon}>😺</span>
 
-      {fortune && (
-        <div>
-          <h2>{formatKoreanDate(getTodayDate())}</h2>
-          <p>행운지수 {fortune.score}점</p>
-          <p>{fortune.message}</p>
+          <div>
+            <h2 style={fortuneStyles.title}>
+              오늘의 냥운 확인
+            </h2>
+
+            <p style={fortuneStyles.subTitle}>
+              고양이가 오늘의 행운을 알려줄게
+            </p>
+          </div>
         </div>
-      )}
-    </div>
+
+        <FortuneButton
+          onClick={handleFortune}
+          disabled={!!fortune}
+        />
+
+        {fortune && (
+          <div style={fortuneStyles.result}>
+            <h3 style={fortuneStyles.date}>
+              {formatKoreanDate(today)}
+            </h3>
+
+            <p style={fortuneStyles.score}>
+              행운지수 {fortune.score}점
+            </p>
+
+            <p style={fortuneStyles.message}>
+              {fortune.message}
+            </p>
+          </div>
+        )}
+      </div>
+    </section>
   );
 };
 
