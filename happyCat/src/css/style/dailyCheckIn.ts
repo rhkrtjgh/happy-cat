@@ -9,11 +9,11 @@ export const checkInStyles = {
     display: "flex",
     alignItems: "center",
     gap: "12px",
-    marginBottom: "24px",
+    marginBottom: "24px"
   },
 
   icon: {
-    fontSize: "40px",
+    fontSize: "40px"
   },
 
   title: commonStyles.title,
@@ -24,7 +24,7 @@ export const checkInStyles = {
     display: "grid",
     gridTemplateColumns: "repeat(5, 1fr)",
     gap: "10px",
-    marginBottom: "20px",
+    marginBottom: "20px"
   },
 
   emotionButton: {
@@ -36,23 +36,23 @@ export const checkInStyles = {
     display: "flex",
     flexDirection: "column" as const,
     alignItems: "center",
-    transition: "0.2s",
+    transition: "0.2s"
   },
 
   selectedEmotion: {
     background: "#fff7e6",
     border: "2px solid #ffb347",
-    transform: "translateY(-2px)",
+    transform: "translateY(-2px)"
   },
 
   emoji: {
     fontSize: "28px",
-    marginBottom: "6px",
+    marginBottom: "6px"
   },
 
   label: {
     fontSize: "12px",
-    fontWeight: 600,
+    fontWeight: 600
   },
 
   textarea: {
@@ -65,13 +65,13 @@ export const checkInStyles = {
     fontSize: "14px",
     marginBottom: "18px",
     outline: "none",
-    boxSizing: "border-box" as const,
+    boxSizing: "border-box" as const
   },
 
   saveButton: {
     ...commonStyles.buttonBase,
     background: "#ffb347",
     color: "#fff",
-    boxShadow: "0 8px 20px rgba(255,179,71,0.35)",
-  },
+    boxShadow: "0 8px 20px rgba(255,179,71,0.35)"
+  }
 };

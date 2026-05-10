@@ -23,7 +23,7 @@ export const catMessages: CatMessage[] = [
   {
     startHour: 14,
     endHour: 18,
-    text: "오늘 하루 어땠냥? 행복을 기록하러 와줘냥 😽",
+    text: "화이팅 하고 있냥? 끝까지 힘내보자냥 😽",
     scoreRange: {
         min: 0,
         max: 100

@@ -8,7 +8,7 @@ export const headerStyles = {
   iconWrap: {
     fontSize: "42px",
     marginBottom: "12px",
-    textAlign: "center" as const,
+    textAlign: "center" as const
   },
 
   title: {
@@ -16,12 +16,12 @@ export const headerStyles = {
     fontSize: "28px",
     textAlign: "center" as const,
     fontWeight: 800,
-    letterSpacing: "-0.5px",
+    letterSpacing: "-0.5px"
   },
 
   subTitle: {
     ...commonStyles.subTitle,
     textAlign: "center" as const,
-    lineHeight: 1.6,
-  },
+    lineHeight: 1.6
+  }
 };

@@ -3,20 +3,20 @@ export const commonStyles = {
     background: "#ffffff",
     borderRadius: "28px",
     padding: "24px",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
   },
 
   title: {
     margin: 0,
     fontSize: "22px",
     fontWeight: 700,
-    color: "#222",
+    color: "#222"
   },
 
   subTitle: {
     margin: "4px 0 0",
     color: "#777",
-    fontSize: "14px",
+    fontSize: "14px"
   },
 
   buttonBase: {
@@ -27,10 +27,10 @@ export const commonStyles = {
     fontSize: "16px",
     fontWeight: 700,
     cursor: "pointer",
-    transition: "all 0.2s ease",
+    transition: "all 0.2s ease"
   },
 
   section: {
-    padding: "20px",
+    padding: "20px"
   },
 };

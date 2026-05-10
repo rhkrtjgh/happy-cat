@@ -4,11 +4,15 @@ import { emotions, type EmotionType } from "../data/emotions";
 import { saveCheckIn, getFortune } from "../utils/storage";
 import { getTodayDate } from "../utils/dateUtils";
 import { checkInStyles } from "../css/style/dailyCheckIn";
+import useAlert from "../hooks/useAlert";
+import CommonAlert from './CommonAlert';
 
 const DailyCheckIn = () =>{
     const [selectedEmotion, setSelectedEmotion] = useState<EmotionType | null>(null);   //감정표현 선택
 
   const [memo, setMemo] = useState(""); //일상 기록 메모
+
+  const { alert, showAlert, closeAlert } = useAlert();  //커스텀 훅으로 공통 알럿 노출 함수 사용
 
   const handleSave = () => {
     const today = getTodayDate();
@@ -16,17 +20,17 @@ const DailyCheckIn = () =>{
     const fortune = getFortune(today);
 
     if (!fortune) {
-      alert("오늘의 운세를 먼저 확인해달라냥 😸");
+      showAlert("오늘의 운세를 먼저 확인해달라냥 😸");
       return;
     }
 
     if (!selectedEmotion) {
-      alert("오늘의 감정을 선택하라냥!");
+      showAlert("오늘의 감정을 선택하라냥!");
       return;
     }
 
     saveCheckIn(today, selectedEmotion, memo);
-    alert("오늘의 하루가 저장됐다냥 ✨");
+    showAlert("오늘의 하루가 저장됐다냥 ✨");
   };
 
   return (
@@ -75,9 +79,10 @@ const DailyCheckIn = () =>{
           onClick={handleSave}
           style={checkInStyles.saveButton}
         >
-          행복냥이에게 맡기기 ✨
+          행복냥이에게 기록을 달라냥 ✨
         </button>
       </div>
+      <CommonAlert open={alert.open} message={alert.message} onClose={closeAlert}/>
     </section>
   );
 }

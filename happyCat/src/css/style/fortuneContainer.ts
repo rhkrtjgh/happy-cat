@@ -13,11 +13,11 @@ export const fortuneStyles = {
     display: "flex",
     alignItems: "center",
     gap: "12px",
-    marginBottom: "24px",
+    marginBottom: "24px"
   },
 
   icon: {
-    fontSize: "40px",
+    fontSize: "40px"
   },
 
   result: {
@@ -25,25 +25,25 @@ export const fortuneStyles = {
     padding: "20px",
     background: "#fff8ef",
     borderRadius: "20px",
-    textAlign: "center" as const,
+    textAlign: "center" as const
   },
 
   date: {
     margin: 0,
     fontSize: "15px",
-    color: "#666",
+    color: "#666"
   },
 
   score: {
     fontSize: "24px",
     fontWeight: 800,
     margin: "14px 0",
-    color: "#ff9f43",
+    color: "#ff9f43"
   },
 
   message: {
     fontSize: "16px",
     lineHeight: 1.6,
-    color: "#333",
-  },
+    color: "#333"
+  }
 };
