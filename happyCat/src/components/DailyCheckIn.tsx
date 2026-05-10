@@ -8,7 +8,7 @@ import useAlert from "../hooks/useAlert";
 import CommonAlert from './CommonAlert';
 
 const DailyCheckIn = () =>{
-    const [selectedEmotion, setSelectedEmotion] = useState<EmotionType | null>(null);   //감정표현 선택
+  const [selectedEmotion, setSelectedEmotion] = useState<EmotionType | null>(null);   //감정표현 선택
 
   const [memo, setMemo] = useState(""); //일상 기록 메모
 
@@ -39,7 +39,9 @@ const DailyCheckIn = () =>{
         <div style={checkInStyles.header}>
           <span style={checkInStyles.icon}>😽</span>
           <div>
-            <h2 style={checkInStyles.title}>오늘 하루 어땠냥?</h2>
+            <h2 style={checkInStyles.title}>
+              오늘 하루 어땠냥?
+            </h2>
             <p style={checkInStyles.subTitle}>
               오늘의 감정과 기억을 남겨보라냥
             </p>
@@ -48,14 +50,12 @@ const DailyCheckIn = () =>{
 
         <div style={checkInStyles.emotionWrap}>
           {emotions.map((emotion) => (
-            <button
-              key={emotion.id}
-              onClick={() => setSelectedEmotion(emotion.id)}
+            <button key={emotion.id} onClick={() => setSelectedEmotion(emotion.id)}
               style={{
                 ...checkInStyles.emotionButton,
                 ...(selectedEmotion === emotion.id
                   ? checkInStyles.selectedEmotion
-                  : {}),
+                  : {})
               }}
             >
               <span style={checkInStyles.emoji}>
@@ -67,19 +67,9 @@ const DailyCheckIn = () =>{
             </button>
           ))}
         </div>
-
-        <textarea
-          value={memo}
-          onChange={(e) => setMemo(e.target.value)}
-          placeholder="오늘 기억하고 싶은 순간을 적어보라냥 (선택)"
-          style={checkInStyles.textarea}
-        />
-
-        <button
-          onClick={handleSave}
-          style={checkInStyles.saveButton}
-        >
-          행복냥이에게 기록을 달라냥 ✨
+        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="오늘 기억하고 싶은 순간을 적어보라냥 (선택)" style={checkInStyles.textarea}/>
+        <button onClick={handleSave} style={checkInStyles.saveButton}>
+            행복냥이에게 기록을 달라냥 ✨
         </button>
       </div>
       <CommonAlert open={alert.open} message={alert.message} onClose={closeAlert}/>

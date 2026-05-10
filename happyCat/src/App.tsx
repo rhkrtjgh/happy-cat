@@ -5,6 +5,7 @@ import FortuneContainer from "./components/FortuneContainer";
 
 import './App.css'
 import DailyCheckIn from "./components/DailyCheckIn";
+import WeeklyEmotionCalendar from "./components/WeeklyEmotionCalender";
 
 function App() {
 
@@ -13,8 +14,8 @@ function App() {
       <Header />
       <Cat />
       <FortuneContainer />
+      <WeeklyEmotionCalendar/>
       <DailyCheckIn />
-      
     </div>
   )
 }

@@ -8,6 +8,7 @@ export type DailyRecord = {
   checkIn?: {             //출석체크 : 일상기록은 행운 기록 이후에 선택해야 해서 optional로 처리
     emotion: EmotionType; //감정상태
     memo?: string;        //일상 기록
+    date: string;           //날짜
   }
 };
 
@@ -42,8 +43,36 @@ export const saveCheckIn = (date: string,emotion: EmotionType,memo?: string) => 
 
   current.checkIn = {
     emotion,
-    memo
+    memo,
+    date
   };
 
   saveDailyRecord(date, current);
+};
+
+const formatDateKey = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+// 이번 주(일~토) 기록 가져오기
+export const getThisWeekFortune = (): (DailyRecord | null)[] => {
+  const result: (DailyRecord | null)[] = [];
+
+  const today = new Date();
+
+  // 오늘 기준 이번 주 일요일
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - today.getDay());
+
+  for (let i = 0; i < 7; i++) {
+    const targetDate = new Date(startOfWeek);
+    targetDate.setDate(startOfWeek.getDate() + i);
+    result.push(getFortune(formatDateKey(targetDate)));
+  }
+
+  return result;
 };
