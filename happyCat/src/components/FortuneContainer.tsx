@@ -13,6 +13,7 @@ type Fortune = {
 const FortuneContainer = () => {
   //오늘 날짜 세팅
   const today = getTodayDate();
+  console.log(today);
   //useState사용
   const [fortune, setFortune] = useState<Fortune | null>(() => {
     return getFortune(today); //처음 랜더링 값을 로컬스토리지 확인하여 세팅 lazy initializer라고 한다.
@@ -32,7 +33,7 @@ const FortuneContainer = () => {
     
     // 오늘 저장된 운세 확인
     const savedFortune = getFortune(today);
-
+    console.log('오늘 정보 : '+savedFortune);
     if (savedFortune !== null) { //저장된게 있다면
       setFortune(savedFortune);
       return;

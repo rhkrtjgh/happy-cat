@@ -5,7 +5,7 @@ import { weeklyEmotionStyles } from "../css/style/weeklyEmotionCalendar";
 const weekLabels = ["일", "월", "화", "수", "목", "금", "토"];
 
 const WeeklyEmotionCalendar = () => {
-    const records = getThisWeekFortune();
+    const records = getThisWeekFortune();   //로컬스토리지에서 이번주 기록정보를 가져온다.
 
     return (
         <section style={weeklyEmotionStyles.container}>
@@ -25,7 +25,6 @@ const WeeklyEmotionCalendar = () => {
                         <span style={weeklyEmotionStyles.dayLabel}>
                             {weekLabels[index]}
                         </span>
-
                         <span style={weeklyEmotionStyles.emoji}>
                             {emotionData?.emoji || "➖"}
                         </span>

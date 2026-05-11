@@ -1,19 +1,37 @@
 //마스코트 고양이가 멘트를 하는 화면부
 import { catMessages } from "../data/catMessages";
+import { catStyles } from "../css/style/cat";
 
 const Cat = () => {
+  const hour = new Date().getHours();
 
-    const hour: number = new Date().getHours(); //현재 시간을 받아온다.
-
-    const currentMessage = catMessages.find(
-        (msg) => hour >= msg.startHour && hour < msg.endHour
-    );
+  const currentMessage = catMessages.find(
+    (msg) => hour >= msg.startHour && hour < msg.endHour
+  );
 
   return (
-    <div>
-      <h2>😸</h2>   {/** 여기에 고양이 이미지를 추가해야함 */}
-      <p>{currentMessage?.text}</p> {/** 상태 메시지 구현부 */}
-    </div>
+    <section style={catStyles.container}>
+      <div style={catStyles.card}>
+        <div style={catStyles.header}>
+          {/* 이미지 */}
+          <div style={catStyles.imageWrap}>
+            <img
+              src="../images/cat.png"
+              alt="행복냥이"
+              style={catStyles.image}
+            />
+          </div>
+        </div>
+        <div style={catStyles.header}>
+          {/* 말풍선 (아래) */}
+          <div style={catStyles.bubble}>
+            <span style={catStyles.name}>행복냥이 : </span>
+            {currentMessage?.text ?? "냥... 오늘은 조용하다냥"}
+          </div>
+        </div>
+      </div>
+    </section>
+    
   );
 };
 

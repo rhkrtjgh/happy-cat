@@ -22,7 +22,6 @@ export const saveDailyRecord = (date: string, fortune: DailyRecord) => {
 //세션에서 오늘의 행운과 기록정보를 가져온다.
 export const getFortune = (date: string): DailyRecord | null => {
   const data = localStorage.getItem(getDailyRecordKey(date));
-
   if(!data){
     return null;
   }

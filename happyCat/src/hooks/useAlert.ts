@@ -4,27 +4,27 @@ import { useState } from "react";
 const useAlert = () => {
   const [alert, setAlert] = useState({
     open: false,
-    message: "",
+    message: ""
   });
 
   const showAlert = (message: string) => {
     setAlert({
       open: true,
-      message,
+      message
     });
   };
 
   const closeAlert = () => {
     setAlert({
       open: false,
-      message: "",
+      message: ""
     });
   };
 
   return {
     alert,
     showAlert,
-    closeAlert,
+    closeAlert
   };
 };
 

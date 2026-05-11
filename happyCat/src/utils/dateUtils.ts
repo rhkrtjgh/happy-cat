@@ -2,7 +2,22 @@
 
 // 오늘 날짜 yyyy-MM-dd
 export const getTodayDate = (): string => {
-  return new Date().toISOString().split("T")[0];
+  const date = new Date();
+
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+
+  return `${yyyy}-${mm}-${dd}`;
+};
+
+//날짜 포멧팅 함수
+export const formatDate = (date: Date): string => {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+
+  return `${yyyy}-${mm}-${dd}`;
 };
 
 //같은 날짜인지 비교하는 함수
@@ -15,13 +30,19 @@ export const getTomorrowDate = (): string => {
   const date = new Date();
   date.setDate(date.getDate() + 1);
 
-  return new Intl.DateTimeFormat("ko-CA").format(date);
+  return formatDate(date);
+};
+
+const parseLocalDate = (dateString: string): Date => {
+  const [year, month, day] = dateString.split("-").map(Number);
+
+  return new Date(year, month - 1, day);
 };
 
 //날짜 차이를 가져온다.
 export const getDaysDiff = (date: string): number => {
-  const today = new Date(getTodayDate());
-  const target = new Date(date);
+  const today = parseLocalDate(getTodayDate());
+  const target = parseLocalDate(date);
 
   const diff = target.getTime() - today.getTime();
 
