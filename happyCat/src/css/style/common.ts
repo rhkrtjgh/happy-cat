@@ -1,21 +1,22 @@
 export const commonStyles = {
   card: {
-    background: "#ffffff",
-    borderRadius: "28px",
+    background: "linear-gradient(180deg, #ffffff 0%, #fffafc 100%)",
+    border: "1px solid #ffe3f1",
+    borderRadius: "30px",
     padding: "24px",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
+    boxShadow: "0 12px 28px rgba(255, 166, 205, 0.2)"
   },
 
   title: {
     margin: 0,
     fontSize: "22px",
     fontWeight: 700,
-    color: "#222"
+    color: "#48354f"
   },
 
   subTitle: {
     margin: "4px 0 0",
-    color: "#777",
+    color: "#7b6783",
     fontSize: "14px"
   },
 
@@ -27,10 +28,11 @@ export const commonStyles = {
     fontSize: "16px",
     fontWeight: 700,
     cursor: "pointer",
-    transition: "all 0.2s ease"
+    transition: "all 0.2s ease",
+    letterSpacing: "0.2px"
   },
 
   section: {
-    padding: "20px"
+    padding: "16px 20px"
   },
 };

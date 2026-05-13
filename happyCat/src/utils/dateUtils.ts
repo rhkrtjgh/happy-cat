@@ -64,17 +64,3 @@ export const formatKoreanDate = (date: string): string => {
 
   return `${year}년 ${Number(month)}월 ${Number(day)}일`;
 };
-
-// 오늘 운세 확인 여부
-export const hasCheckedToday = (): boolean => {
-  const savedDate = localStorage.getItem("fortuneDate");
-
-  if (!savedDate) return false;
-
-  return isSameDate(savedDate, getTodayDate());
-};
-
-// 오늘 날짜 저장
-export const saveTodayCheck = (): void => {
-  localStorage.setItem("fortuneDate", getTodayDate());
-};

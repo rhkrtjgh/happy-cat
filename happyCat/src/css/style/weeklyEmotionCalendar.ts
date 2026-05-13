@@ -11,7 +11,7 @@ export const weeklyEmotionStyles = {
     display: "grid",
     gridTemplateColumns: "repeat(7, 1fr)",
     gap: "12px",
-    marginTop: "24px"
+    marginTop: "20px"
   },
 
   // dayCard: {
@@ -23,7 +23,8 @@ export const weeklyEmotionStyles = {
   //   transition: "all 0.2s ease"
   // },
   dayCard: {
-    background: "#fff8ef",
+    background: "linear-gradient(180deg, #fff8fd 0%, #fff2f8 100%)",
+    border: "1px solid #ffdff0",
     borderRadius: "14px",
     padding: "10px 4px",
     textAlign: "center" as const,
@@ -75,7 +76,7 @@ export const weeklyEmotionStyles = {
   },
   dayLabel: {
     fontSize: "13px",
-    color: "#64748b",
+    color: "#7c6a85",
     marginBottom: "8px"
   }
 };

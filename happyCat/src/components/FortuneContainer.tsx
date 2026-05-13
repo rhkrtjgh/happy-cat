@@ -2,7 +2,7 @@ import { useState } from 'react';
 import FortuneButton from './FortuneButton';
 import { fortunes } from '../data/fortunes';
 import { getTodayDate, formatKoreanDate } from '../utils/dateUtils';
-import { getFortune, saveDailyRecord } from '../utils/storage';
+import { getDailyRecord, saveDailyRecord } from '../utils/storage';
 import { fortuneStyles } from "../css/style/fortuneContainer";
 
 type Fortune = {
@@ -11,43 +11,22 @@ type Fortune = {
 };
 
 const FortuneContainer = () => {
-  //오늘 날짜 세팅
   const today = getTodayDate();
-  console.log(today);
-  //useState사용
   const [fortune, setFortune] = useState<Fortune | null>(() => {
-    return getFortune(today); //처음 랜더링 값을 로컬스토리지 확인하여 세팅 lazy initializer라고 한다.
+    return getDailyRecord(today);
   });
-  
-  //useEffect를 사용하면 첫화면이 렌더링된 후 한번 더 불필요하게 렌더링이 되기 때문에 useState의 초기값에서 처음 랜더링될 때 처리한다.
-  // useEffect(() => {
-  //   const savedFortune = getFortune(today);
 
-  //   if (savedFortune) {
-  //     setFortune(savedFortune);
-  //   }
-  // }, []);
-
-  const handleFortune = () => { //행운 점수를 랜덤으로 산출하기 위함
-
-    
-    // 오늘 저장된 운세 확인
-    const savedFortune = getFortune(today);
-    console.log('오늘 정보 : '+savedFortune);
-    if (savedFortune !== null) { //저장된게 있다면
+  const handleFortune = () => {
+    const savedFortune = getDailyRecord(today);
+    if (savedFortune !== null) {
       setFortune(savedFortune);
       return;
-    }else{  //없는 경우 오늘의 운세를 보여준다.
+    } else {
       const randomIndex = Math.floor(Math.random() * fortunes.length);
       const fortuneResult = fortunes[randomIndex];
-      //랜덤으로 뽑은 행운정보를 세팅한다.
       setFortune(fortuneResult);
-
-      //로컬스토리지에 저장한다.
-      saveDailyRecord(today,fortuneResult);
+      saveDailyRecord(today, fortuneResult);
     }
-
-    
   };
 
   return (

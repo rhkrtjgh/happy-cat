@@ -12,26 +12,28 @@ const Cat = () => {
   return (
     <section style={catStyles.container}>
       <div style={catStyles.card}>
-        <div style={catStyles.header}>
-          {/* 이미지 */}
-          <div style={catStyles.imageWrap}>
-            <img
-              src="../images/cat.png"
-              alt="행복냥이"
-              style={catStyles.image}
-            />
+        <div style={catStyles.wrapper}>
+          <div style={catStyles.header}>
+            <div style={catStyles.imageWrap}>
+              <img src="/images/cat.png" alt="행복냥이" style={catStyles.image} />
+            </div>
           </div>
-        </div>
-        <div style={catStyles.header}>
-          {/* 말풍선 (아래) */}
-          <div style={catStyles.bubble}>
-            <span style={catStyles.name}>행복냥이 : </span>
-            {currentMessage?.text ?? "냥... 오늘은 조용하다냥"}
+          <div style={catStyles.bubbleRow}>
+            <div style={catStyles.bubbleWrap}>
+              <span style={catStyles.bubbleTail} />
+              <span style={catStyles.bubbleTailInner} />
+              <div style={catStyles.bubble}>
+                <span style={catStyles.name}>행복냥이</span>
+                <span style={catStyles.message}>
+                  {currentMessage?.text ?? "냥... 오늘은 조용하다냥"}
+                </span>
+              </div>
+            </div>
           </div>
+          <p style={catStyles.helperText}>매일이 행복했으면 좋겠다냥</p>
         </div>
       </div>
     </section>
-    
   );
 };
 

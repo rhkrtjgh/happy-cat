@@ -6,8 +6,8 @@ export const headerStyles = {
   card: commonStyles.card,
 
   iconWrap: {
-    fontSize: "42px",
-    marginBottom: "12px",
+    fontSize: "46px",
+    marginBottom: "10px",
     textAlign: "center" as const
   },
 
@@ -16,12 +16,14 @@ export const headerStyles = {
     fontSize: "28px",
     textAlign: "center" as const,
     fontWeight: 800,
-    letterSpacing: "-0.5px"
+    letterSpacing: "-0.4px",
+    color: "#4b3657"
   },
 
   subTitle: {
     ...commonStyles.subTitle,
     textAlign: "center" as const,
-    lineHeight: 1.6
-  }
+    lineHeight: 1.6,
+    marginTop: "8px"
+  },
 };

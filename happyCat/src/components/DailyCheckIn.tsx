@@ -1,7 +1,7 @@
 //오늘의 일상 기록을 위한 컴포넌트
 import { useState } from "react";
 import { emotions, type EmotionType } from "../data/emotions";
-import { saveCheckIn, getFortune } from "../utils/storage";
+import { saveCheckIn, getDailyRecord } from "../utils/storage";
 import { getTodayDate } from "../utils/dateUtils";
 import { checkInStyles } from "../css/style/dailyCheckIn";
 import useAlert from "../hooks/useAlert";
@@ -16,8 +16,7 @@ const DailyCheckIn = () =>{
 
   const handleSave = () => {
     const today = getTodayDate();
-
-    const fortune = getFortune(today);
+    const fortune = getDailyRecord(today);
 
     if (!fortune) {
       showAlert("오늘의 운세를 먼저 확인해달라냥 😸");

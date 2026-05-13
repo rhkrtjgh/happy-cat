@@ -14,11 +14,12 @@ export const alertModalStyles = {
 
   modal: {
     width: "320px",
-    backgroundColor: "#fffef8",
+    backgroundColor: "#fff9fc",
+    border: "1px solid #ffdced",
     borderRadius: "24px",
     padding: "28px 24px",
     textAlign: "center" as const,
-    boxShadow: "0 12px 30px rgba(0,0,0,0.15)",
+    boxShadow: "0 14px 30px rgba(255, 150, 200, 0.28)",
     animation: "fadeIn 0.25s ease",
   },
 
@@ -30,13 +31,13 @@ export const alertModalStyles = {
   title: {
     fontSize: "22px",
     fontWeight: 700,
-    color: "#444",
+    color: "#4b3657",
     marginBottom: "12px",
   },
 
   message: {
     fontSize: "16px",
-    color: "#666",
+    color: "#6f5f78",
     lineHeight: 1.6,
     marginBottom: "24px",
   },
@@ -46,7 +47,8 @@ export const alertModalStyles = {
     padding: "14px",
     border: "none",
     borderRadius: "16px",
-    backgroundColor: "#ffd86b",
+    background: "linear-gradient(135deg, #ff9dc4 0%, #ffb87f 100%)",
+    color: "#fff",
     fontSize: "16px",
     fontWeight: 700,
     cursor: "pointer",
