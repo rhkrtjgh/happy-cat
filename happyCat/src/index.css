@@ -1,51 +1,194 @@
-:root {
-  --text: #6d5d78;
-  --text-h: #4b3657;
-  --bg: #fff7fb;
-  --border: #f1d9e8;
-  --code-bg: #f4f3ec;
-  --accent: #ff86bc;
-  --accent-bg: rgba(255, 134, 188, 0.12);
-  --accent-border: rgba(255, 134, 188, 0.45);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+/* 행복하다냥 — 몽글 푸딩/젤리 + 시간대 파스텔 테마 */
 
-  --sans: "Pretendard", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+:root {
+  --pudding-radius: 28px;
+  --pudding-radius-btn: 24px;
+  --pudding-shadow-card: 0 24px 48px -12px rgba(255, 170, 195, 0.45);
+  --pudding-shadow-soft: 0 16px 36px -10px rgba(255, 200, 140, 0.35);
+  --pudding-shadow-pressed: 0 10px 24px -8px rgba(255, 170, 195, 0.3);
+  --pudding-bg: #fff5f8;
+  --pudding-bg-elevated: #fffafc;
+  --pudding-surface: #ffffff;
+  --pudding-surface-2: #fff0f6;
+  --pudding-border-subtle: rgba(255, 190, 210, 0.4);
+  --pudding-text: #5c4a55;
+  --pudding-text-muted: #9a7f8c;
+  --pudding-text-heading: #4a3842;
+
+  --neo-border-width: 0px;
+  --neo-radius-card: 28px;
+  --neo-radius-button: 24px;
+  --neo-radius-input: 20px;
+  --neo-shadow: var(--pudding-shadow-card);
+  --neo-shadow-sm: var(--pudding-shadow-soft);
+  --neo-shadow-pressed: var(--pudding-shadow-pressed);
+  --neo-bg: var(--pudding-bg);
+  --neo-bg-elevated: var(--pudding-bg-elevated);
+  --neo-surface: var(--pudding-surface);
+  --neo-surface-2: var(--pudding-surface-2);
+  --neo-border: var(--pudding-border-subtle);
+  --neo-text: var(--pudding-text);
+  --neo-text-muted: var(--pudding-text-muted);
+  --neo-text-heading: var(--pudding-text-heading);
+  --neo-accent: #fff0b8;
+  --neo-accent-2: #ffd4e5;
+  --neo-accent-soft: #fff0f6;
+  --neo-code-bg: #fff8f0;
+  --neo-root-border: transparent;
+  --neo-btn-primary-bg: #ffe99a;
+  --neo-btn-primary-fg: #6b5348;
+  --neo-disabled-bg: #f5e8ee;
+  --neo-disabled-text: #b8a0aa;
+  --neo-overlay: rgba(255, 200, 220, 0.4);
+
+  /* 레거시 이름 → 테마 변수 연결 */
+  --text: var(--neo-text);
+  --text-h: var(--neo-text-heading);
+  --bg: var(--neo-bg);
+  --border: var(--neo-root-border);
+  --code-bg: var(--neo-code-bg);
+  --accent: var(--neo-accent);
+  --accent-bg: color-mix(in srgb, var(--neo-accent-2) 18%, transparent);
+  --accent-border: color-mix(in srgb, var(--neo-border) 55%, transparent);
+  --social-bg: color-mix(in srgb, var(--neo-surface) 70%, transparent);
+
+  --sans:
+    "Pretendard", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+  --heading:
+    system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light;
+  font: clamp(14px, 3.8vw, 16px) / 145% var(--sans);
+  letter-spacing: 0.02em;
   color: var(--text);
-  background: var(--bg);
+  background: transparent;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+html {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  background-color: var(--app-bg-color, #ffd1dc);
+}
+
+/* 전체 WebView 배경 — 화면 크기·비율에 맞게 cover/position 조절 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--app-bg-color, #ffd1dc);
+  background-image: var(--app-bg-image);
+  background-repeat: var(--app-bg-repeat, no-repeat);
+  background-position: var(--app-bg-position, center top);
+  background-size: var(--app-bg-size, cover);
+  -webkit-background-size: var(--app-bg-size, cover);
+}
+
+@supports (height: 100dvh) {
+  body::before {
+    min-height: 100dvh;
+    min-height: 100svh;
   }
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: var(--app-max-width, 430px);
+  height: 100%;
+  max-height: 100dvh;
+  max-height: 100svh;
   margin: 0 auto;
   text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  border-inline: none;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  background: linear-gradient(180deg, #fff9fd 0%, #fff3f8 100%);
+  background: transparent;
 }
 
-body {
-  margin: 0;
-  background: #fff1f8;
+.app-page {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: var(--app-layout-gap);
+  width: 100%;
+  height: 100%;
+  max-height: 100dvh;
+  max-height: 100svh;
+  overflow: hidden;
+  background: transparent;
+  padding: calc(env(safe-area-inset-top, 0px) + var(--app-page-pad-y, 8px)) 0
+    calc(env(safe-area-inset-bottom, 0px) + var(--app-page-pad-y, 8px));
+  box-sizing: border-box;
+}
+
+/* 1행 Header · 2행 Cat(늘어남) · 3행 Fortune(하단) */
+.app-page > header,
+.app-page > section.cat-section,
+.app-page > section.fortune-section {
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-page > section.cat-section {
+  align-self: stretch;
+}
+
+.app-page > section.fortune-section {
+  max-height: min(52svh, 100%);
+}
+
+.app-page > header .header-card,
+.app-page > section.cat-section > div,
+.app-page > section.fortune-section > div {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-page > section.cat-section > div {
+  flex: 1 1 0;
+  min-height: 0;
+  height: 100%;
+}
+
+.app-page > section.fortune-section > div {
+  flex: 0 0 auto;
+  max-height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.app-page > section.fortune-section > div::-webkit-scrollbar {
+  display: none;
 }
 
 h1,
@@ -59,20 +202,28 @@ h1 {
   font-size: 56px;
   letter-spacing: -1.68px;
   margin: 32px 0;
-  @media (max-width: 1024px) {
+}
+
+@media (max-width: 1024px) {
+  h1 {
     font-size: 36px;
     margin: 20px 0;
   }
 }
+
 h2 {
   font-size: 24px;
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
-  @media (max-width: 1024px) {
+}
+
+@media (max-width: 1024px) {
+  h2 {
     font-size: 20px;
   }
 }
+
 p {
   margin: 0;
 }
@@ -90,4 +241,86 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+/* ─── 몽글 푸딩 UI (NeoCard / PuddingCard 공통) ─── */
+
+.neo-card,
+.pudding-card {
+  background: var(--pudding-surface);
+  border: 1px solid var(--pudding-border-subtle);
+  border-radius: max(24px, var(--pudding-radius));
+  box-shadow: var(--pudding-shadow-card);
+  padding: 1.25rem 1.35rem;
+  box-sizing: border-box;
+  color: var(--pudding-text);
+}
+
+.neo-btn,
+.pudding-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: none;
+  border-radius: max(24px, var(--pudding-radius-btn));
+  box-shadow: var(--pudding-shadow-soft);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  padding: 0.65rem 1.15rem;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    filter 0.15s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.neo-btn:focus-visible,
+.pudding-btn:focus-visible {
+  outline: 2px solid var(--neo-accent-2);
+  outline-offset: 3px;
+}
+
+.neo-btn:disabled,
+.pudding-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  filter: grayscale(0.15);
+}
+
+.neo-btn:active:not(:disabled),
+.pudding-btn:active:not(:disabled) {
+  transform: scale(0.98);
+  box-shadow: var(--pudding-shadow-pressed);
+}
+
+.neo-btn--primary,
+.pudding-btn--primary {
+  background: var(--neo-btn-primary-bg);
+  color: var(--neo-btn-primary-fg);
+}
+
+.neo-btn--secondary,
+.pudding-btn--secondary {
+  background: var(--neo-accent-2);
+  color: var(--neo-text-heading);
+}
+
+.neo-btn--ghost {
+  background: var(--neo-surface-2);
+  color: var(--neo-text-heading);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

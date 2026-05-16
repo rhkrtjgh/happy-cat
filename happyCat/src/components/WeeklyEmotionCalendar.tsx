@@ -4,8 +4,41 @@ import { weeklyEmotionStyles } from "../css/style/weeklyEmotionCalendar";
 
 const weekLabels = ["일", "월", "화", "수", "목", "금", "토"];
 
-const WeeklyEmotionCalendar = () => {
+type WeeklyEmotionCalendarProps = {
+  /** 팝업 등 좁은 영역: 카드·그리드 폭을 부모에 맞춤 */
+  compact?: boolean;
+};
+
+const WeeklyEmotionCalendar = ({ compact = false }: WeeklyEmotionCalendarProps) => {
   const records = getThisWeekFortune();
+
+  if (compact) {
+    return (
+      <div style={weeklyEmotionStyles.compactWrapper}>
+        <div style={weeklyEmotionStyles.compactCard}>
+          <h2 style={weeklyEmotionStyles.compactTitle}>이번 주 감정 기록이다냥</h2>
+
+          <div style={weeklyEmotionStyles.compactGrid}>
+            {records.map((record, index) => {
+              const emotion = record?.checkIn?.emotion;
+              const emotionData = emotions.find((item) => item.id === emotion);
+
+              return (
+                <div key={index} style={weeklyEmotionStyles.compactDayCard}>
+                  <span style={weeklyEmotionStyles.compactDayLabel}>
+                    {weekLabels[index]}
+                  </span>
+                  <span style={weeklyEmotionStyles.compactEmoji}>
+                    {emotionData?.emoji || "➖"}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section style={weeklyEmotionStyles.container}>

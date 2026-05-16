@@ -9,9 +9,12 @@ export const weeklyEmotionStyles = {
 
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(7, 1fr)",
+    gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
     gap: "12px",
-    marginTop: "20px"
+    marginTop: "20px",
+    width: "100%",
+    maxWidth: "100%",
+    boxSizing: "border-box" as const,
   },
 
   // dayCard: {
@@ -23,23 +26,26 @@ export const weeklyEmotionStyles = {
   //   transition: "all 0.2s ease"
   // },
   dayCard: {
-    background: "linear-gradient(180deg, #fff8fd 0%, #fff2f8 100%)",
-    border: "1px solid #ffdff0",
-    borderRadius: "14px",
+    background: "var(--neo-surface-2)",
+    border: "var(--neo-border-width) solid var(--neo-border)",
+    borderRadius: "max(14px, var(--neo-radius-input))",
     padding: "10px 4px",
     textAlign: "center" as const,
     cursor: "pointer",
-    transition: "all 0.2s ease"
+    transition: "transform 0.08s ease, box-shadow 0.08s ease",
+    minWidth: 0,
+    boxSizing: "border-box" as const,
+    boxShadow: "var(--neo-shadow-sm)",
   },
 
   dayName: {
     fontSize: "14px",
-    color: "#777"
+    color: "var(--neo-text-muted)",
   },
 
   emoji: {
     fontSize: "28px",
-    marginTop: "8px"
+    marginTop: "8px",
   },
 
   modalOverlay: {
@@ -76,7 +82,68 @@ export const weeklyEmotionStyles = {
   },
   dayLabel: {
     fontSize: "13px",
-    color: "#7c6a85",
-    marginBottom: "8px"
-  }
+    color: "var(--neo-text-muted)",
+    marginBottom: "8px",
+  },
+
+  /** 팝업 등 좁은 영역: 너비 100%, 그리드 오버플로 방지 */
+  compactWrapper: {
+    width: "100%",
+    maxWidth: "100%",
+    boxSizing: "border-box" as const,
+    margin: 0,
+    padding: 0,
+  },
+
+  compactCard: {
+    ...commonStyles.card,
+    width: "100%",
+    maxWidth: "100%",
+    boxSizing: "border-box" as const,
+    padding: "16px",
+    margin: 0,
+  },
+
+  compactTitle: {
+    ...commonStyles.title,
+    fontSize: "18px",
+    textAlign: "center" as const,
+    marginBottom: "4px",
+  },
+
+  compactGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
+    gap: "6px",
+    marginTop: "14px",
+    width: "100%",
+    maxWidth: "100%",
+    boxSizing: "border-box" as const,
+  },
+
+  compactDayCard: {
+    background: "var(--neo-surface-2)",
+    border: "var(--neo-border-width) solid var(--neo-border)",
+    borderRadius: "max(12px, var(--neo-radius-input))",
+    padding: "8px 2px",
+    textAlign: "center" as const,
+    minWidth: 0,
+    boxSizing: "border-box" as const,
+    transition: "transform 0.08s ease, box-shadow 0.08s ease",
+    boxShadow: "var(--neo-shadow-sm)",
+  },
+
+  compactDayLabel: {
+    display: "block",
+    fontSize: "11px",
+    color: "var(--neo-text-muted)",
+    marginBottom: "4px",
+    fontWeight: 600,
+  },
+
+  compactEmoji: {
+    fontSize: "20px",
+    lineHeight: 1.2,
+    display: "block",
+  },
 };

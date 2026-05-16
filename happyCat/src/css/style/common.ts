@@ -1,38 +1,66 @@
+/**
+ * 행복하다냥 메인 화면 공통 스타일 (목업 기준)
+ * 크기·여백은 css/responsive.css 의 --app-* 변수 사용
+ */
+export const happyColors = {
+  bg: "#FFD1DC",
+  card: "#FFFBF5",
+  rose: "#E5B5B5",
+  roseDark: "#d9a0a0",
+  yellow: "#FFEB99",
+  text: "#3D3D3D",
+  textMuted: "#6b5c5c",
+  bubble: "#FFFFFF",
+  namePink: "#e88a9a",
+};
+
 export const commonStyles = {
+  section: {
+    padding: "0 var(--app-padding-x)",
+    maxWidth: "var(--app-max-width)",
+    margin: "0 auto",
+    boxSizing: "border-box" as const,
+    width: "100%",
+  },
+
   card: {
-    background: "linear-gradient(180deg, #ffffff 0%, #fffafc 100%)",
-    border: "1px solid #ffe3f1",
-    borderRadius: "30px",
-    padding: "24px",
-    boxShadow: "0 12px 28px rgba(255, 166, 205, 0.2)"
+    background: happyColors.card,
+    border: "none",
+    borderRadius: "var(--app-radius-card)",
+    padding: "var(--app-gap-lg) var(--app-gap-md)",
+    boxShadow: "0 12px 32px -8px rgba(180, 120, 140, 0.22)",
+    boxSizing: "border-box" as const,
+    color: happyColors.text,
   },
 
   title: {
     margin: 0,
-    fontSize: "22px",
-    fontWeight: 700,
-    color: "#48354f"
+    fontSize: "var(--app-font-title-lg)",
+    fontWeight: 800,
+    color: happyColors.text,
+    letterSpacing: "-0.3px",
   },
 
   subTitle: {
-    margin: "4px 0 0",
-    color: "#7b6783",
-    fontSize: "14px"
+    margin: "6px 0 0",
+    color: happyColors.textMuted,
+    fontSize: "var(--app-font-body-sm)",
+    lineHeight: 1.55,
+    fontWeight: 500,
   },
 
   buttonBase: {
     width: "100%",
     border: "none",
-    borderRadius: "20px",
-    padding: "18px",
-    fontSize: "16px",
+    borderRadius: "999px",
+    padding: "var(--app-btn-py) var(--app-btn-px)",
+    fontSize: "var(--app-btn-font)",
     fontWeight: 700,
     cursor: "pointer",
-    transition: "all 0.2s ease",
-    letterSpacing: "0.2px"
-  },
-
-  section: {
-    padding: "16px 20px"
+    transition: "transform 0.1s ease, box-shadow 0.1s ease",
+    letterSpacing: "0.2px",
+    boxShadow: "0 10px 24px -6px rgba(220, 180, 80, 0.45)",
+    boxSizing: "border-box" as const,
+    fontFamily: "inherit",
   },
 };

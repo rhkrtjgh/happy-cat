@@ -1,0 +1,135 @@
+/**
+ * 모바일 WebView 반응형
+ * .app-page: 상단~하단 꽉 채움 + 카드 간 일정 gap
+ */
+:root {
+  --app-max-width: 430px;
+
+  /* 배경 이미지 (반응형) */
+  --app-bg-color: #ffd1dc;
+  --app-bg-image: url("/images/background.png");
+  --app-bg-size: cover;
+  --app-bg-position: center top;
+  --app-bg-repeat: no-repeat;
+
+  /* 카드 사이 동일 간격 + 화면 상·하 여백 */
+  --app-layout-gap: clamp(10px, 2.5vw, 14px);
+  --app-page-pad-y: clamp(8px, 1.8svh, 14px);
+  --app-padding-x: clamp(10px, 3.2vw, 16px);
+
+  --app-gap-xs: clamp(4px, 1.2vw, 6px);
+  --app-gap-sm: clamp(6px, 1.8vw, 10px);
+  --app-gap-md: clamp(8px, 2.4vw, 12px);
+  --app-gap-lg: clamp(10px, 3vw, 14px);
+
+  --app-radius-card: clamp(20px, 5.5vw, 28px);
+  --app-radius-card-sm: clamp(18px, 5vw, 24px);
+  --app-radius-bubble: clamp(16px, 4.5vw, 20px);
+  --app-radius-inner: clamp(12px, 3.5vw, 16px);
+
+  --app-font-title-lg: clamp(19px, 5.2vw, 22px);
+  --app-font-title: clamp(17px, 4.6vw, 21px);
+  --app-font-title-sm: clamp(15px, 4.2vw, 18px);
+  --app-font-body: clamp(13px, 3.6vw, 16px);
+  --app-font-body-sm: clamp(12px, 3.2vw, 14px);
+  --app-font-caption: clamp(11px, 3vw, 13px);
+  --app-font-small: clamp(10px, 2.8vw, 12px);
+
+  --app-btn-py: clamp(10px, 2.8vw, 13px);
+  --app-btn-px: clamp(12px, 3.6vw, 18px);
+  --app-btn-font: clamp(14px, 3.8vw, 16px);
+
+  --app-header-icon-box: clamp(66px, 18vw, 84px);
+  --app-header-icon-img: clamp(60px, 16.5vw, 78px);
+  --app-header-card-py: clamp(12px, 3.3vw, 15px);
+  --app-header-card-px: clamp(15px, 4.8vw, 21px);
+  --app-header-font-title: clamp(25px, 6.9vw, 31px);
+  --app-header-font-sub: clamp(12px, 3.2vw, 14px);
+  --app-header-gap: clamp(9px, 2.4vw, 12px);
+
+  --app-cat-hero-min: clamp(72px, 14svh, 120px);
+  /* 고양이 이미지 하단 50% 오버레이 (말풍선·기록 버튼) */
+  --app-cat-overlay-pad-top: clamp(6px, 1.8vw, 10px);
+  --app-cat-overlay-pad-x: clamp(10px, 3.2vw, 16px);
+  --app-cat-overlay-pad-bottom: clamp(10px, 2.8vw, 14px);
+  --app-cat-bubble-max-w: min(300px, calc(100% - 2 * var(--app-padding-x) - 16px));
+  --app-cat-bubble-width: min(88%, var(--app-cat-bubble-max-w));
+  --app-cat-bubble-pad-y: clamp(8px, 2.2vw, 12px);
+  --app-cat-bubble-pad-x: clamp(10px, 3.2vw, 14px);
+  --app-cat-bubble-font-name: clamp(12px, 3.2vw, 14px);
+  --app-cat-bubble-font-msg: clamp(12px, 3.2vw, 14px);
+  --app-cat-footer-py: clamp(4px, 1.5vw, 8px);
+  --app-cat-footer-px: clamp(10px, 3.2vw, 16px);
+
+  --app-fortune-icon-h: clamp(36px, 10vw, 52px);
+  --app-fortune-icon-img-h: clamp(32px, 9vw, 48px);
+  --app-fortune-icon-img-w: clamp(44px, 12vw, 64px);
+  --app-fortune-card-py: clamp(10px, 2.8vw, 14px);
+  --app-fortune-card-px: clamp(10px, 3.2vw, 14px);
+  --app-fortune-score: clamp(15px, 4.2vw, 18px);
+
+  --app-modal-pad: clamp(12px, 4vw, 20px);
+  --app-modal-title: clamp(16px, 4.4vw, 18px);
+}
+
+.app-page:has(.fortune-section--revealed) {
+  --app-fortune-icon-h: clamp(40px, 11vw, 56px);
+  --app-fortune-icon-img-h: clamp(36px, 10vw, 52px);
+}
+
+@media (max-width: 360px) {
+  :root {
+    --app-padding-x: 10px;
+    --app-layout-gap: 8px;
+  }
+}
+
+@media (max-height: 700px) {
+  :root {
+    --app-layout-gap: 7px;
+    --app-cat-hero-min: 64px;
+    --app-fortune-icon-h: clamp(32px, 9vw, 44px);
+    --app-fortune-icon-img-h: clamp(28px, 8vw, 40px);
+    --app-bg-position: center 12% top;
+    --app-bg-size: cover;
+  }
+}
+
+@media (max-height: 600px) {
+  :root {
+    --app-layout-gap: 6px;
+    --app-cat-hero-min: 56px;
+    --app-fortune-icon-h: 30px;
+    --app-fortune-icon-img-h: 26px;
+    --app-bg-position: center 18% top;
+  }
+}
+
+/* 세로가 긴 기기 — 상단 패턴 위주 */
+@media (min-aspect-ratio: 9/18) and (min-height: 750px) {
+  :root {
+    --app-bg-position: center top;
+    --app-bg-size: cover;
+  }
+}
+
+/* 가로가 넓은 WebView */
+@media (min-aspect-ratio: 3/4) {
+  :root {
+    --app-bg-size: cover;
+    --app-bg-position: center 8% top;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  :root {
+    --app-bg-size: auto 100%;
+    --app-bg-position: center center;
+  }
+}
+
+@media (min-width: 390px) {
+  :root {
+    --app-padding-x: clamp(12px, 3vw, 16px);
+  }
+}
