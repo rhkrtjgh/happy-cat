@@ -121,12 +121,53 @@ export const catStyles = {
     background: "transparent",
   },
 
-  helperText: {
-    margin: 0,
-    fontSize: "var(--app-font-small)",
-    color: happyColors.textMuted,
-    fontWeight: 500,
-    textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)",
+  actionRow: {
+    display: "flex",
+    width: "100%",
+    gap: "clamp(6px, 2vw, 10px)",
+    boxSizing: "border-box" as const,
+  },
+
+  actionButton: {
+    flex: 1,
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column" as const,
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
+    gap: "2px",
+    border: "none",
+    borderRadius: "var(--app-radius-btn, 20px)",
+    padding: "clamp(8px, 2.2vw, 10px) clamp(4px, 1.2vw, 6px)",
+    fontSize: "var(--app-font-caption)",
+    fontWeight: 700,
+    lineHeight: 1.2,
+    color: happyColors.text,
+    background: happyColors.bubble,
+    boxShadow: "0 6px 16px -6px rgba(160, 100, 120, 0.35)",
+    cursor: "pointer",
+    fontFamily: "inherit",
+    transition: "transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease",
+    boxSizing: "border-box" as const,
+    WebkitTapHighlightColor: "transparent",
+  },
+
+  actionButtonActive: {
+    background: happyColors.yellow,
+    boxShadow: "0 4px 12px -4px rgba(230, 190, 60, 0.55)",
+    transform: "scale(0.97)",
+  },
+
+  actionEmoji: {
+    fontSize: "clamp(16px, 4.2vw, 20px)",
+    lineHeight: 1,
+  },
+
+  actionLabel: {
+    whiteSpace: "nowrap" as const,
+    overflow: "hidden" as const,
+    textOverflow: "ellipsis" as const,
+    maxWidth: "100%",
   },
 
   recordButton: {

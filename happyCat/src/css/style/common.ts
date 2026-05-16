@@ -16,7 +16,7 @@ export const happyColors = {
 
 export const commonStyles = {
   section: {
-    padding: "0 var(--app-padding-x)",
+    paddingInline: "var(--app-padding-x)",
     maxWidth: "var(--app-max-width)",
     margin: "0 auto",
     boxSizing: "border-box" as const,

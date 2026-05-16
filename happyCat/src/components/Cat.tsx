@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+  catActions,
+  catActionImages,
+  CAT_ACTION_IMAGE_DURATION_MS,
+  CAT_HERO_IMAGE,
+  pickCatActionMessage,
+  type CatAction,
+} from "../data/catInteractions";
 import { catMessages } from "../data/catMessages";
 import { catStyles } from "../css/style/cat";
-
-/** 큰 히어로 일러스트 경로 — 이 파일을 교체하면 화면에 반영됩니다 */
-const CAT_HERO_IMAGE = "/images/cat-hero.png";
 
 type CatProps = {
   onOpenDailyRecord?: () => void;
@@ -12,10 +17,58 @@ type CatProps = {
 const Cat = ({ onOpenDailyRecord }: CatProps) => {
   const hour = new Date().getHours();
   const [heroError, setHeroError] = useState(false);
+  const [heroImageSrc, setHeroImageSrc] = useState(CAT_HERO_IMAGE);
+  const [activeAction, setActiveAction] = useState<CatAction | null>(null);
+  const [interactionMessage, setInteractionMessage] = useState<string | null>(
+    null
+  );
+  const revertTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const currentMessage = catMessages.find(
     (msg) => hour >= msg.startHour && hour < msg.endHour
   );
+
+  useEffect(() => {
+    return () => {
+      if (revertTimerRef.current) {
+        clearTimeout(revertTimerRef.current);
+      }
+    };
+  }, []);
+
+  const revertHeroImage = () => {
+    setHeroImageSrc(CAT_HERO_IMAGE);
+    setActiveAction(null);
+    setInteractionMessage(null);
+    if (revertTimerRef.current) {
+      clearTimeout(revertTimerRef.current);
+      revertTimerRef.current = null;
+    }
+  };
+
+  const handleAction = (action: CatAction) => {
+    setActiveAction(action);
+    setInteractionMessage(pickCatActionMessage(action));
+    setHeroError(false);
+
+    if (revertTimerRef.current) {
+      clearTimeout(revertTimerRef.current);
+    }
+
+    setHeroImageSrc(catActionImages[action]);
+    revertTimerRef.current = setTimeout(revertHeroImage, CAT_ACTION_IMAGE_DURATION_MS);
+  };
+
+  const handleHeroImageError = () => {
+    if (heroImageSrc === CAT_HERO_IMAGE) {
+      setHeroError(true);
+      return;
+    }
+    revertHeroImage();
+  };
+
+  const bubbleMessage =
+    interactionMessage ?? currentMessage?.text ?? "냥... 오늘은 조용하다냥";
 
   return (
     <section className="cat-section" style={catStyles.container}>
@@ -23,10 +76,11 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
         <div style={catStyles.heroArea}>
           {!heroError ? (
             <img
-              src={CAT_HERO_IMAGE}
+              key={heroImageSrc}
+              src={heroImageSrc}
               alt="행복냥이"
               style={catStyles.heroImage}
-              onError={() => setHeroError(true)}
+              onError={handleHeroImageError}
             />
           ) : (
             <div style={catStyles.heroPlaceholder}>
@@ -39,13 +93,31 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
           <div style={catStyles.heroOverlay}>
             <div style={catStyles.bubbleOverlay}>
               <span style={catStyles.name}>행복냥이</span>
-              <span style={catStyles.message}>
-                {currentMessage?.text ?? "냥... 오늘은 조용하다냥"}
-              </span>
+              <span style={catStyles.message}>{bubbleMessage}</span>
             </div>
 
             <div style={catStyles.footer}>
-              <p style={catStyles.helperText}>매일이 행복했으면 좋겠다냥</p>
+              <div style={catStyles.actionRow}>
+                {catActions.map((action) => (
+                  <button
+                    key={action.id}
+                    type="button"
+                    onClick={() => handleAction(action.id)}
+                    style={{
+                      ...catStyles.actionButton,
+                      ...(activeAction === action.id
+                        ? catStyles.actionButtonActive
+                        : {}),
+                    }}
+                    aria-pressed={activeAction === action.id}
+                  >
+                    <span style={catStyles.actionEmoji} aria-hidden>
+                      {action.emoji}
+                    </span>
+                    <span style={catStyles.actionLabel}>{action.label}</span>
+                  </button>
+                ))}
+              </div>
               {onOpenDailyRecord && (
                 <button
                   type="button"

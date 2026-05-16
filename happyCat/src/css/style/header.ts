@@ -3,7 +3,6 @@ import { commonStyles, happyColors } from "../style/common";
 export const headerStyles = {
   container: {
     ...commonStyles.section,
-    padding: "0 var(--app-padding-x)",
   },
 
   card: {

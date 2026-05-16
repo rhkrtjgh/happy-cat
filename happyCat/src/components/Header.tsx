@@ -4,7 +4,7 @@ const HEADER_CAT_IMAGE = "/images/cat1.png";
 
 const Header = () => {
   return (
-    <header style={headerStyles.container}>
+    <header className="app-header" style={headerStyles.container}>
       <div className="header-card" style={headerStyles.card}>
         <div style={headerStyles.iconWrap}>
           <img

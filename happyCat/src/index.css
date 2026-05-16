@@ -142,9 +142,17 @@ body::before {
   max-height: 100svh;
   overflow: hidden;
   background: transparent;
-  padding: calc(env(safe-area-inset-top, 0px) + var(--app-page-pad-y, 8px)) 0
+  padding: var(--app-page-pad-y, 8px) 0
+    calc(constant(safe-area-inset-bottom) + var(--app-page-pad-y, 8px));
+  padding: var(--app-page-pad-y, 8px) 0
     calc(env(safe-area-inset-bottom, 0px) + var(--app-page-pad-y, 8px));
   box-sizing: border-box;
+}
+
+/* 노치·펀치홀·다이나믹 아일랜드 — 상단 safe-area는 헤더에서 처리 */
+.app-header {
+  padding-top: calc(16px + constant(safe-area-inset-top));
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
 }
 
 /* 1행 Header · 2행 Cat(늘어남) · 3행 Fortune(하단) */
