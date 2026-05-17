@@ -61,7 +61,7 @@ export const catStyles = {
   /** 이미지 높이 50% 지점부터 하단까지 */
   heroOverlay: {
     position: "absolute" as const,
-    top: "50%",
+    top: "var(--app-cat-overlay-top, 50%)",
     left: 0,
     right: 0,
     bottom: 0,
@@ -69,11 +69,15 @@ export const catStyles = {
     display: "flex",
     flexDirection: "column" as const,
     alignItems: "center" as const,
-    justifyContent: "space-between" as const,
+    justifyContent: "flex-end" as const,
+    gap: "var(--app-cat-overlay-stack-gap)",
     padding:
       "var(--app-cat-overlay-pad-top) var(--app-cat-overlay-pad-x) var(--app-cat-overlay-pad-bottom)",
     boxSizing: "border-box" as const,
     pointerEvents: "none" as const,
+    overflowY: "auto" as const,
+    overflowX: "hidden" as const,
+    WebkitOverflowScrolling: "touch" as const,
     background:
       "linear-gradient(180deg, rgba(255, 251, 245, 0) 0%, rgba(255, 251, 245, 0.88) 28%)",
   },
@@ -115,7 +119,7 @@ export const catStyles = {
     display: "flex",
     flexDirection: "column" as const,
     alignItems: "center" as const,
-    gap: "var(--app-gap-sm)",
+    gap: "var(--app-cat-footer-gap)",
     boxSizing: "border-box" as const,
     pointerEvents: "auto" as const,
     background: "transparent",
@@ -124,22 +128,24 @@ export const catStyles = {
   actionRow: {
     display: "flex",
     width: "100%",
-    gap: "clamp(6px, 2vw, 10px)",
+    gap: "var(--app-cat-action-gap)",
     boxSizing: "border-box" as const,
   },
 
   actionButton: {
     flex: 1,
     minWidth: 0,
+    minHeight: "var(--app-cat-action-min-h)",
     display: "flex",
     flexDirection: "column" as const,
     alignItems: "center" as const,
     justifyContent: "center" as const,
-    gap: "2px",
+    gap: "var(--app-cat-action-inner-gap)",
     border: "none",
-    borderRadius: "var(--app-radius-btn, 20px)",
-    padding: "clamp(8px, 2.2vw, 10px) clamp(4px, 1.2vw, 6px)",
-    fontSize: "var(--app-font-caption)",
+    borderRadius: "var(--app-cat-action-radius)",
+    padding:
+      "var(--app-cat-action-py) var(--app-cat-action-px)",
+    fontSize: "var(--app-cat-action-font)",
     fontWeight: 700,
     lineHeight: 1.2,
     color: happyColors.text,
@@ -159,7 +165,7 @@ export const catStyles = {
   },
 
   actionEmoji: {
-    fontSize: "clamp(16px, 4.2vw, 20px)",
+    fontSize: "var(--app-cat-action-emoji)",
     lineHeight: 1,
   },
 
@@ -172,9 +178,13 @@ export const catStyles = {
 
   recordButton: {
     ...commonStyles.buttonBase,
+    padding:
+      "var(--app-cat-record-btn-py) var(--app-btn-px)",
+    fontSize: "var(--app-cat-record-btn-font)",
     background: happyColors.yellow,
     color: happyColors.text,
     maxWidth: "100%",
+    flexShrink: 0,
     boxShadow: "0 10px 28px -8px rgba(230, 190, 60, 0.55)",
   },
 };

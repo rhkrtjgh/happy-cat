@@ -175,6 +175,12 @@ body::before {
   max-height: min(52svh, 100%);
 }
 
+@media (max-height: 700px) {
+  .app-page > section.fortune-section {
+    max-height: min(40svh, 100%);
+  }
+}
+
 .app-page > header .header-card,
 .app-page > section.cat-section > div,
 .app-page > section.fortune-section > div {
@@ -186,6 +192,38 @@ body::before {
   flex: 1 1 0;
   min-height: 0;
   height: 100%;
+}
+
+/* Cat 상호작용 버튼 — 터치 영역·좁은 화면 라벨 */
+.cat-section .cat-action-btn {
+  min-height: var(--app-cat-action-min-h, 44px);
+}
+
+.cat-section .cat-action-btn:active {
+  transform: scale(0.97);
+}
+
+.cat-section .cat-action-btn[aria-pressed="true"]:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 360px) {
+  .cat-section .cat-action-btn {
+    letter-spacing: -0.02em;
+  }
+}
+
+/* 말풍선·버튼 오버레이 — 내용이 넘치면 스크롤(하단 버튼 잘림 방지) */
+.cat-section .cat-hero-overlay {
+  scrollbar-width: none;
+}
+
+.cat-section .cat-hero-overlay::-webkit-scrollbar {
+  display: none;
+}
+
+.cat-section .cat-hero-overlay > * {
+  flex-shrink: 0;
 }
 
 .app-page > section.fortune-section > div {

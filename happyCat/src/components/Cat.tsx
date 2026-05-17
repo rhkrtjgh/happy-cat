@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   catActions,
   catActionImages,
@@ -7,7 +7,7 @@ import {
   pickCatActionMessage,
   type CatAction,
 } from "../data/catInteractions";
-import { catMessages } from "../data/catMessages";
+import { pickCatMessageForHour } from "../data/catMessages";
 import { catStyles } from "../css/style/cat";
 
 type CatProps = {
@@ -24,8 +24,9 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
   );
   const revertTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const currentMessage = catMessages.find(
-    (msg) => hour >= msg.startHour && hour < msg.endHour
+  const timeSlotMessage = useMemo(
+    () => pickCatMessageForHour(hour),
+    [hour]
   );
 
   useEffect(() => {
@@ -67,8 +68,7 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
     revertHeroImage();
   };
 
-  const bubbleMessage =
-    interactionMessage ?? currentMessage?.text ?? "냥... 오늘은 조용하다냥";
+  const bubbleMessage = interactionMessage ?? timeSlotMessage;
 
   return (
     <section className="cat-section" style={catStyles.container}>
@@ -90,7 +90,7 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
             </div>
           )}
 
-          <div style={catStyles.heroOverlay}>
+          <div className="cat-hero-overlay" style={catStyles.heroOverlay}>
             <div style={catStyles.bubbleOverlay}>
               <span style={catStyles.name}>행복냥이</span>
               <span style={catStyles.message}>{bubbleMessage}</span>
@@ -102,6 +102,7 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
                   <button
                     key={action.id}
                     type="button"
+                    className="cat-action-btn"
                     onClick={() => handleAction(action.id)}
                     style={{
                       ...catStyles.actionButton,
