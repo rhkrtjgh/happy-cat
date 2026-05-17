@@ -199,8 +199,12 @@ body::before {
   min-height: var(--app-cat-action-min-h, 44px);
 }
 
-.cat-section .cat-action-btn:active {
+.cat-section .cat-action-btn:active:not(:disabled) {
   transform: scale(0.97);
+}
+
+.cat-section .cat-action-btn:disabled {
+  pointer-events: none;
 }
 
 .cat-section .cat-action-btn[aria-pressed="true"]:active {

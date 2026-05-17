@@ -44,12 +44,23 @@ export const removeDailyRecord = (date: string) => {
 // 하위 호환용 이름 (기존 호출부 유지)
 export const removeFortune = removeDailyRecord;
 
-// 오늘의 체크인(감정/메모) 저장
-export const saveCheckIn = (date: string, emotion: EmotionType, memo?: string) => {
+export type SaveCheckInResult = "no_fortune" | "already_saved" | "saved";
+
+// 오늘의 체크인(감정/메모) 저장 — 당일 최초 기록만 성공
+export const saveCheckIn = (
+  date: string,
+  emotion: EmotionType,
+  memo?: string
+): SaveCheckInResult => {
   const current = getDailyRecord(date);
 
-  // 운세를 먼저 확인한 날에만 체크인 가능
-  if (!current) return;
+  if (!current) {
+    return "no_fortune";
+  }
+
+  if (current.checkIn) {
+    return "already_saved";
+  }
 
   current.checkIn = {
     emotion,
@@ -58,6 +69,7 @@ export const saveCheckIn = (date: string, emotion: EmotionType, memo?: string) =
   };
 
   saveDailyRecord(date, current);
+  return "saved";
 };
 
 // 이번 주(일~토) 기록 조회

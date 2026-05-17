@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import { emotions, type EmotionType } from "../data/emotions";
 import { saveCheckIn, getDailyRecord } from "../utils/storage";
+import { addSnacks } from "../utils/snackInventory";
 import { getTodayDate } from "../utils/dateUtils";
 import { checkInStyles } from "../css/style/dailyCheckIn";
 import useAlert from "../hooks/useAlert";
@@ -54,9 +55,21 @@ const DailyCheckIn = ({
       return;
     }
 
-    saveCheckIn(today, selectedEmotion, memo);
+    const result = saveCheckIn(today, selectedEmotion, memo);
+
+    if (result === "already_saved") {
+      closeModalAfterAlertRef.current = false;
+      showAlert("오늘은 이미 기록했어요. 내일 또 만나자냥 😺");
+      return;
+    }
+
+    if (result !== "saved") {
+      return;
+    }
+
+    addSnacks(1);
     closeModalAfterAlertRef.current = !!onAfterSaveAlertConfirm;
-    showAlert("오늘의 하루가 저장됐다냥 ✨");
+    showAlert("오늘의 하루가 저장됐다냥 ✨ 간식 1개도 받았어요 🐟");
   };
 
   return (

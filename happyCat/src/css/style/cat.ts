@@ -123,12 +123,43 @@ export const catStyles = {
     boxSizing: "border-box" as const,
     pointerEvents: "auto" as const,
     background: "transparent",
+    overflow: "visible" as const,
   },
 
   actionRow: {
     display: "flex",
     width: "100%",
     gap: "var(--app-cat-action-gap)",
+    boxSizing: "border-box" as const,
+    overflow: "visible" as const,
+  },
+
+  actionButtonWrap: {
+    position: "relative" as const,
+    flex: 1,
+    minWidth: 0,
+    display: "flex",
+    overflow: "visible" as const,
+  },
+
+  snackGuideTooltip: {
+    position: "absolute" as const,
+    left: "50%",
+    bottom: "calc(100% + 8px)",
+    transform: "translateX(-50%)",
+    width: "max-content",
+    maxWidth: "min(240px, 92vw)",
+    padding: "10px 12px",
+    borderRadius: "var(--app-radius-bubble)",
+    background: happyColors.bubble,
+    boxShadow: "0 10px 28px -8px rgba(160, 100, 120, 0.4)",
+    fontSize: "var(--app-font-caption)",
+    lineHeight: 1.45,
+    color: happyColors.text,
+    textAlign: "center" as const,
+    whiteSpace: "pre-line" as const,
+    zIndex: 10,
+    pointerEvents: "none" as const,
     boxSizing: "border-box" as const,
   },
 
@@ -162,6 +193,27 @@ export const catStyles = {
     background: happyColors.yellow,
     boxShadow: "0 4px 12px -4px rgba(230, 190, 60, 0.55)",
     transform: "scale(0.97)",
+  },
+
+  actionButtonDisabled: {
+    opacity: 0.55,
+    cursor: "not-allowed",
+    background: "rgba(255, 255, 255, 0.75)",
+    boxShadow: "none",
+  },
+
+  actionCooldownHint: {
+    fontSize: "clamp(9px, 2.4vw, 10px)",
+    fontWeight: 600,
+    color: happyColors.textMuted,
+    lineHeight: 1.1,
+  },
+
+  actionSnackCount: {
+    fontSize: "clamp(9px, 2.4vw, 10px)",
+    fontWeight: 800,
+    color: happyColors.namePink,
+    lineHeight: 1.1,
   },
 
   actionEmoji: {

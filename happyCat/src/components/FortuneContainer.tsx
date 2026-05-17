@@ -3,6 +3,7 @@ import FortuneButton from "./FortuneButton";
 import { fortunes } from "../data/fortunes";
 import { getTodayDate, formatKoreanDate } from "../utils/dateUtils";
 import { getDailyRecord, saveDailyRecord } from "../utils/storage";
+import { addSnacks } from "../utils/snackInventory";
 import { fortuneStyles } from "../css/style/fortuneContainer";
 
 const FORTUNE_CAT_IMAGE = "/images/cat2.png";
@@ -17,17 +18,21 @@ const FortuneContainer = () => {
   const [fortune, setFortune] = useState<Fortune | null>(() => {
     return getDailyRecord(today);
   });
+  const [earnedSnackThisReveal, setEarnedSnackThisReveal] = useState(false);
 
   const handleFortune = () => {
     const savedFortune = getDailyRecord(today);
     if (savedFortune !== null) {
       setFortune(savedFortune);
+      setEarnedSnackThisReveal(false);
       return;
     }
     const randomIndex = Math.floor(Math.random() * fortunes.length);
     const fortuneResult = fortunes[randomIndex];
     setFortune(fortuneResult);
     saveDailyRecord(today, fortuneResult);
+    addSnacks(1);
+    setEarnedSnackThisReveal(true);
   };
 
   return (
@@ -57,6 +62,11 @@ const FortuneContainer = () => {
               <div style={fortuneStyles.resultBody}>
                 <p style={fortuneStyles.score}>행운지수 {fortune.score}점</p>
                 <p style={fortuneStyles.message}>{fortune.message}</p>
+                {earnedSnackThisReveal && (
+                  <p style={fortuneStyles.snackReward}>
+                    🐟 간식 1개를 받았어요! 간식주기로 줄 수 있어요
+                  </p>
+                )}
               </div>
             </div>
           )}

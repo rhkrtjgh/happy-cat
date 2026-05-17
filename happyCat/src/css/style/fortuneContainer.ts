@@ -130,6 +130,14 @@ export const fortuneStyles = {
     wordBreak: "keep-all" as const,
   },
 
+  snackReward: {
+    margin: "8px 0 0",
+    fontSize: "var(--app-font-caption)",
+    fontWeight: 700,
+    color: fortuneColors.score,
+    lineHeight: 1.4,
+  },
+
   sparkle: {
     position: "absolute" as const,
     right: "var(--app-gap-md)",
