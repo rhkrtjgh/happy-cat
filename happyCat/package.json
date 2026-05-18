@@ -10,10 +10,8 @@
     "build:ait": "ait build",
     "lint": "eslint .",
     "preview": "vite preview",
-    /*깃 허브 배포용*/
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    /*깃 허브 배포용 끝*/
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@apps-in-toss/web-framework": "^2.5.1",
