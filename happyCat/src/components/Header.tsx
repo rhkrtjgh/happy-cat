@@ -1,6 +1,8 @@
 import { headerStyles } from "../css/style/header";
 
-const HEADER_CAT_IMAGE = "/images/cat1.png";
+import { assetUrl } from "../utils/assetUrl";
+
+const HEADER_CAT_IMAGE = assetUrl("images/cat1.png");
 
 const Header = () => {
   return (

@@ -9,7 +9,9 @@ import useAlert from "../hooks/useAlert";
 import CommonAlert from './CommonAlert';
 import WeeklyEmotionCalendar from "./WeeklyEmotionCalendar";
 
-const CHECKIN_CAT_IMAGE = "/images/cat3.png";
+import { assetUrl } from "../utils/assetUrl";
+
+const CHECKIN_CAT_IMAGE = assetUrl("images/cat3.png");
 
 type DailyCheckInProps = {
   variant?: "default" | "modal";

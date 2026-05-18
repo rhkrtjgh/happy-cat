@@ -6,7 +6,9 @@ import { getDailyRecord, saveDailyRecord } from "../utils/storage";
 import { addSnacks } from "../utils/snackInventory";
 import { fortuneStyles } from "../css/style/fortuneContainer";
 
-const FORTUNE_CAT_IMAGE = "/images/cat2.png";
+import { assetUrl } from "../utils/assetUrl";
+
+const FORTUNE_CAT_IMAGE = assetUrl("images/cat2.png");
 
 type Fortune = {
   score: number;

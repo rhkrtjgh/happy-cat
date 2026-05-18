@@ -7,7 +7,8 @@
 
   /* 배경 이미지 (반응형) */
   --app-bg-color: #ffd1dc;
-  --app-bg-image: url("/images/background.png");
+  /* 배경 URL은 main.tsx에서 BASE_URL 반영 후 설정 */
+  --app-bg-image: none;
   --app-bg-size: cover;
   --app-bg-position: center top;
   --app-bg-repeat: no-repeat;

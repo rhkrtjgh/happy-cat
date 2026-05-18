@@ -1,11 +1,13 @@
+import { assetUrl } from "../utils/assetUrl";
+
 export type CatAction = "pet" | "snack" | "play";
 
-export const CAT_HERO_IMAGE = "/images/cat-hero.png";
+export const CAT_HERO_IMAGE = assetUrl("images/cat-hero.png");
 
 export const catActionImages: Record<CatAction, string> = {
-  pet: "/images/petting.png",
-  snack: "/images/feeding.png",
-  play: "/images/playing.png",
+  pet: assetUrl("images/petting.png"),
+  snack: assetUrl("images/feeding.png"),
+  play: assetUrl("images/playing.png"),
 };
 
 export const catActions: {
