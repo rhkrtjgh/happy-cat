@@ -44,8 +44,8 @@ export const headerStyles = {
     display: "flex",
     flexDirection: "column" as const,
     justifyContent: "center",
-    gap: "clamp(4px, 1.2vw, 6px)",
-    paddingTop: "2px",
+    gap: "clamp(2px, 0.8vw, 4px)",
+    paddingTop: 0,
   },
 
   title: {

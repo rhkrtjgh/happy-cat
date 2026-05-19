@@ -3,19 +3,32 @@ import { useState } from "react";
 import Header from "./components/Header";
 import Cat from "./components/Cat";
 import FortuneContainer from "./components/FortuneContainer";
+import CommonAlert from "./components/CommonAlert";
 
-import './App.css'
+import "./App.css";
 import DailyCheckIn from "./components/DailyCheckIn";
 import { usePuddingTheme } from "./hooks/usePuddingTheme";
+import useAlert from "./hooks/useAlert";
+import { getDailyRecord } from "./utils/storage";
+import { getTodayDate } from "./utils/dateUtils";
 
 function App() {
   const [isCheckInModalOpen, setIsCheckInModalOpen] = useState(false);
+  const { alert, showAlert, closeAlert } = useAlert();
   usePuddingTheme();
+
+  const handleOpenDailyRecord = () => {
+    if (!getDailyRecord(getTodayDate())) {
+      showAlert("오늘의 운세를 먼저 확인해달라냥 😸");
+      return;
+    }
+    setIsCheckInModalOpen(true);
+  };
 
   return (
     <div className="app-page">
       <Header />
-      <Cat onOpenDailyRecord={() => setIsCheckInModalOpen(true)} />
+      <Cat onOpenDailyRecord={handleOpenDailyRecord} />
       <FortuneContainer />
       {isCheckInModalOpen && (
         <div
@@ -82,8 +95,13 @@ function App() {
           </div>
         </div>
       )}
+      <CommonAlert
+        open={alert.open}
+        message={alert.message}
+        onClose={closeAlert}
+      />
     </div>
-  )
+  );
 }
 
 export default App

@@ -2,7 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base: '/happy-cat/', //깃 허브 배포용 임시.
-})
+  // AIT(앱인토스) 빌드: '/', GitHub Pages: '/happy-cat/'
+  base: mode === 'ait' ? '/' : '/happy-cat/',
+}))

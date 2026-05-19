@@ -111,6 +111,22 @@ export const weeklyEmotionStyles = {
     marginBottom: "4px",
   },
 
+  compactHint: {
+    margin: "0 0 4px",
+    fontSize: "12px",
+    color: "var(--neo-text-muted)",
+    textAlign: "center" as const,
+    lineHeight: 1.4,
+  },
+
+  weekHint: {
+    margin: "0 0 4px",
+    fontSize: "13px",
+    color: "var(--neo-text-muted)",
+    textAlign: "center" as const,
+    lineHeight: 1.4,
+  },
+
   compactGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
@@ -145,5 +161,22 @@ export const weeklyEmotionStyles = {
     fontSize: "20px",
     lineHeight: 1.2,
     display: "block",
+  },
+
+  dayCardSelected: {
+    background: "#fff0f6",
+    border: "2px solid #e88a9a",
+    boxShadow: "0 0 0 2px rgba(232, 138, 154, 0.25), var(--neo-shadow-sm)",
+  },
+
+  compactDayCardSelected: {
+    background: "#fff0f6",
+    border: "2px solid #e88a9a",
+    boxShadow: "0 0 0 2px rgba(232, 138, 154, 0.25), var(--neo-shadow-sm)",
+  },
+
+  dayCardToday: {
+    outline: "2px dashed rgba(232, 138, 154, 0.45)",
+    outlineOffset: "2px",
   },
 };

@@ -35,12 +35,34 @@ export const catStyles = {
     background: happyColors.card,
   },
 
-  heroImage: {
+  heroImageStack: {
+    position: "relative" as const,
+    width: "100%",
+    height: "100%",
+    overflow: "hidden" as const,
+    background: happyColors.card,
+  },
+
+  /** WebView 캐시 워밍 — 화면 밖에서 미리 그려 둠 */
+  heroPreloadHidden: {
+    position: "absolute" as const,
+    width: 0,
+    height: 0,
+    overflow: "hidden" as const,
+    opacity: 0,
+    pointerEvents: "none" as const,
+    visibility: "hidden" as const,
+  },
+
+  heroImageLayer: {
+    position: "absolute" as const,
+    inset: 0,
     width: "100%",
     height: "100%",
     objectFit: "cover" as const,
     objectPosition: "center top" as const,
     display: "block",
+    transition: "opacity 0.45s ease-in-out",
   },
 
   heroPlaceholder: {

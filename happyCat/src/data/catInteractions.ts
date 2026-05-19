@@ -22,6 +22,11 @@ export const catActions: {
 
 export const CAT_ACTION_IMAGE_DURATION_MS = 5000;
 
+export const catHeroImageSources = [
+  CAT_HERO_IMAGE,
+  ...Object.values(catActionImages),
+] as const;
+
 export const catActionMessages: Record<CatAction, string[]> = {
   pet: [
     "으으으... 좋다냥~ 토닥토닥이다냥 💕",

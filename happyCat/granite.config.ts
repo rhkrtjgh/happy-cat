@@ -3,18 +3,22 @@ import { defineConfig } from "@apps-in-toss/web-framework/config";
 
 /** Mac LAN IP — 샌드박스/실기기 WebView는 localhost 대신 이 주소로 Vite에 접속합니다. */
 function getLanIPv4(): string {
-  const prefer = ["en0", "en1"];
-  for (const name of prefer) {
-    const addr = networkInterfaces()[name]?.find(
-      (n) => n.family === "IPv4" || n.family === 4,
-    )?.address;
-    if (addr && !addr.startsWith("169.254.")) return addr;
-  }
-  for (const nets of Object.values(networkInterfaces())) {
-    const addr = nets?.find(
-      (n) => (n.family === "IPv4" || n.family === 4) && !n.internal,
-    )?.address;
-    if (addr && !addr.startsWith("169.254.")) return addr;
+  try {
+    const prefer = ["en0", "en1"];
+    for (const name of prefer) {
+      const addr = networkInterfaces()[name]?.find(
+        (n) => n.family === "IPv4" || n.family === 4,
+      )?.address;
+      if (addr && !addr.startsWith("169.254.")) return addr;
+    }
+    for (const nets of Object.values(networkInterfaces())) {
+      const addr = nets?.find(
+        (n) => (n.family === "IPv4" || n.family === 4) && !n.internal,
+      )?.address;
+      if (addr && !addr.startsWith("169.254.")) return addr;
+    }
+  } catch {
+    // CI·샌드박스 등에서 networkInterfaces 실패 시
   }
   return "localhost";
 }
@@ -32,7 +36,7 @@ export default defineConfig({
     port: 5173,
     commands: {
       dev: "vite --host",
-      build: "tsc -b && vite build",
+      build: "tsc -b && vite build --mode ait",
     },
   },
   permissions: [],

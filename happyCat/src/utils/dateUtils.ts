@@ -39,7 +39,7 @@ const parseLocalDate = (dateString: string): Date => {
   return new Date(year, month - 1, day);
 };
 
-//날짜 차이를 가져온다.
+//날짜 차이를 가져온다. (양수: 미래, 음수: 과거)
 export const getDaysDiff = (date: string): number => {
   const today = parseLocalDate(getTodayDate());
   const target = parseLocalDate(date);
@@ -47,6 +47,16 @@ export const getDaysDiff = (date: string): number => {
   const diff = target.getTime() - today.getTime();
 
   return Math.ceil(diff / (1000 * 60 * 60 * 24));
+};
+
+/** 기록 날짜로부터 오늘까지 지난 일수 (과거일수록 큼, 오늘=0) */
+export const getDaysSince = (date: string): number => {
+  const today = parseLocalDate(getTodayDate());
+  const target = parseLocalDate(date);
+
+  const diff = today.getTime() - target.getTime();
+
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
 };
 
 //지난 날짜인지 확인

@@ -173,6 +173,12 @@ export const checkInStyles = {
     wordBreak: "keep-all" as const,
   },
 
+  textareaWrap: {
+    width: "100%",
+    marginBottom: "18px",
+    boxSizing: "border-box" as const,
+  },
+
   textarea: {
     width: "100%",
     minHeight: "100px",
@@ -181,7 +187,7 @@ export const checkInStyles = {
     padding: "14px",
     resize: "none" as const,
     fontSize: "14px",
-    marginBottom: "18px",
+    marginBottom: "6px",
     outline: "none",
     boxSizing: "border-box" as const,
     background: "var(--neo-surface)",
@@ -189,11 +195,26 @@ export const checkInStyles = {
     boxShadow: "var(--neo-shadow-sm)",
   },
 
+  memoCounter: {
+    display: "block",
+    textAlign: "right" as const,
+    fontSize: "12px",
+    fontWeight: 600,
+    color: "var(--neo-text-muted)",
+    lineHeight: 1.2,
+  },
+
   saveButton: {
     ...commonStyles.buttonBase,
     background: "var(--neo-btn-primary-bg)",
     color: "var(--neo-btn-primary-fg)",
     boxShadow: "var(--neo-shadow)",
+  },
+
+  saveButtonDisabled: {
+    opacity: 0.55,
+    cursor: "not-allowed",
+    boxShadow: "none",
   },
 
   modalTitle: {
@@ -204,5 +225,87 @@ export const checkInStyles = {
   modalSubTitle: {
     ...commonStyles.subTitle,
     fontSize: "13px",
+  },
+
+  savedEmotionRow: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "10px",
+    marginBottom: "14px",
+    padding: "12px 16px",
+    borderRadius: "max(16px, var(--neo-radius-input))",
+    background: "#fff0f6",
+    border: "2px solid #e88a9a",
+    boxSizing: "border-box" as const,
+  },
+
+  savedEmotionEmoji: {
+    fontSize: "32px",
+    lineHeight: 1,
+  },
+
+  savedEmotionLabel: {
+    fontSize: "15px",
+    fontWeight: 800,
+    color: "#c45c7a",
+  },
+
+  savedMemoBox: {
+    width: "100%",
+    minHeight: "88px",
+    borderRadius: "max(16px, var(--neo-radius-input))",
+    border: "var(--neo-border-width) solid var(--neo-border)",
+    padding: "14px",
+    marginBottom: "14px",
+    boxSizing: "border-box" as const,
+    background: "var(--neo-surface)",
+    color: "var(--neo-text)",
+    fontSize: "14px",
+    lineHeight: 1.55,
+    textAlign: "left" as const,
+    whiteSpace: "pre-wrap" as const,
+    wordBreak: "break-word" as const,
+    boxShadow: "var(--neo-shadow-sm)",
+  },
+
+  savedMemoEmpty: {
+    color: "var(--neo-text-muted)",
+    fontStyle: "italic" as const,
+  },
+
+  catBubble: {
+    width: "100%",
+    padding: "14px 16px",
+    borderRadius: "max(18px, var(--neo-radius-input))",
+    background: "#ffffff",
+    boxShadow: "0 8px 24px -6px rgba(160, 100, 120, 0.28)",
+    boxSizing: "border-box" as const,
+    textAlign: "center" as const,
+  },
+
+  catBubbleName: {
+    display: "block",
+    fontSize: "13px",
+    fontWeight: 700,
+    color: "#e88a9a",
+    marginBottom: "6px",
+  },
+
+  catBubbleMessage: {
+    margin: 0,
+    fontSize: "14px",
+    lineHeight: 1.5,
+    color: "var(--neo-text)",
+    wordBreak: "keep-all" as const,
+  },
+
+  emptyDayMessage: {
+    margin: "8px 0 0",
+    padding: "20px 12px",
+    textAlign: "center" as const,
+    fontSize: "14px",
+    lineHeight: 1.5,
+    color: "var(--neo-text-muted)",
   },
 };

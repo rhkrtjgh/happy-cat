@@ -51,8 +51,14 @@ const FortuneContainer = () => {
               style={fortuneStyles.iconImage}
             />
           </div>
-          <h2 style={fortuneStyles.title}>오늘의 냥운 확인</h2>
-          <p style={fortuneStyles.subTitle}>고양이가 오늘의 행운을 알려줄게</p>
+          {!fortune && (
+            <>
+              <h2 style={fortuneStyles.title}>오늘의 냥운 확인</h2>
+              <p style={fortuneStyles.subTitle}>
+                고양이가 오늘의 행운을 알려줄게
+              </p>
+            </>
+          )}
         </header>
 
         <div style={fortuneStyles.body}>

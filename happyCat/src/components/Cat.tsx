@@ -4,6 +4,7 @@ import {
   catActionImages,
   CAT_ACTION_IMAGE_DURATION_MS,
   CAT_HERO_IMAGE,
+  catHeroImageSources,
   pickCatActionMessage,
   type CatAction,
 } from "../data/catInteractions";
@@ -21,6 +22,10 @@ import {
   SNACK_GUIDE_TOOLTIP,
   SNACK_UPDATED_EVENT,
 } from "../utils/snackInventory";
+import {
+  ensureCatImageReady,
+  preloadCatImages,
+} from "../utils/preloadCatImages";
 
 type CatProps = {
   onOpenDailyRecord?: () => void;
@@ -29,8 +34,19 @@ type CatProps = {
 const Cat = ({ onOpenDailyRecord }: CatProps) => {
   const hour = new Date().getHours();
   const [heroError, setHeroError] = useState(false);
-  const [heroImageSrc, setHeroImageSrc] = useState(CAT_HERO_IMAGE);
+  const [heroLayers, setHeroLayers] = useState<[string, string]>([
+    CAT_HERO_IMAGE,
+    CAT_HERO_IMAGE,
+  ]);
+  const [activeHeroLayer, setActiveHeroLayer] = useState<0 | 1>(0);
+  const activeHeroLayerRef = useRef<0 | 1>(0);
+  const heroLayersRef = useRef<[string, string]>([CAT_HERO_IMAGE, CAT_HERO_IMAGE]);
+  const crossfadeTokenRef = useRef(0);
+  const heroLayerRefs = useRef<
+    [HTMLImageElement | null, HTMLImageElement | null]
+  >([null, null]);
   const [activeAction, setActiveAction] = useState<CatAction | null>(null);
+  const [isInteractionBusy, setIsInteractionBusy] = useState(false);
   const [interactionMessage, setInteractionMessage] = useState<string | null>(
     null
   );
@@ -53,6 +69,10 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
   );
 
   useEffect(() => {
+    void preloadCatImages(catHeroImageSources);
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (revertTimerRef.current) {
         clearTimeout(revertTimerRef.current);
@@ -62,6 +82,79 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
       }
     };
   }, []);
+
+  const crossfadeToHeroImage = (nextSrc: string, onSettled?: () => void) => {
+    const visibleSrc = heroLayersRef.current[activeHeroLayerRef.current];
+    if (nextSrc === visibleSrc) {
+      onSettled?.();
+      return;
+    }
+
+    const token = ++crossfadeTokenRef.current;
+    let settled = false;
+    const settle = () => {
+      if (settled || crossfadeTokenRef.current !== token) {
+        return;
+      }
+      settled = true;
+      onSettled?.();
+    };
+
+    void ensureCatImageReady(nextSrc)
+      .then(() => {
+        if (crossfadeTokenRef.current !== token) {
+          return;
+        }
+
+        const inactiveLayer: 0 | 1 =
+          activeHeroLayerRef.current === 0 ? 1 : 0;
+
+        setHeroLayers((prev) => {
+          const next: [string, string] = [...prev];
+          next[inactiveLayer] = nextSrc;
+          heroLayersRef.current = next;
+          return next;
+        });
+
+        const revealInactiveLayer = () => {
+          if (crossfadeTokenRef.current !== token) {
+            return;
+          }
+
+          const el = heroLayerRefs.current[inactiveLayer];
+          if (!el?.complete || el.naturalWidth === 0) {
+            return;
+          }
+
+          activeHeroLayerRef.current = inactiveLayer;
+          setActiveHeroLayer(inactiveLayer);
+          settle();
+        };
+
+        requestAnimationFrame(() => {
+          revealInactiveLayer();
+          const el = heroLayerRefs.current[inactiveLayer];
+          if (el && (!el.complete || el.naturalWidth === 0)) {
+            el.addEventListener("load", revealInactiveLayer, { once: true });
+          }
+        });
+      })
+      .catch(() => {
+        if (crossfadeTokenRef.current !== token) {
+          return;
+        }
+        if (nextSrc === CAT_HERO_IMAGE) {
+          setHeroError(true);
+          settle();
+          return;
+        }
+        crossfadeToHeroImage(CAT_HERO_IMAGE, () => {
+          setActiveAction(null);
+          setInteractionMessage(null);
+          setIsInteractionBusy(false);
+        });
+      });
+  };
 
   const closeSnackGuide = () => {
     if (snackGuideTimerRef.current) {
@@ -109,16 +202,22 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
   }, []);
 
   const revertHeroImage = () => {
-    setHeroImageSrc(CAT_HERO_IMAGE);
     setActiveAction(null);
     setInteractionMessage(null);
     if (revertTimerRef.current) {
       clearTimeout(revertTimerRef.current);
       revertTimerRef.current = null;
     }
+    crossfadeToHeroImage(CAT_HERO_IMAGE, () => {
+      setIsInteractionBusy(false);
+    });
   };
 
   const handleAction = (action: CatAction) => {
+    if (isInteractionBusy) {
+      return;
+    }
+
     if (action === "snack") {
       if (snackCount <= 0) {
         openSnackGuide();
@@ -141,6 +240,7 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
       setCooldownTick((t) => t + 1);
     }
 
+    setIsInteractionBusy(true);
     setActiveAction(action);
     setInteractionMessage(pickCatActionMessage(action));
     setHeroError(false);
@@ -149,16 +249,8 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
       clearTimeout(revertTimerRef.current);
     }
 
-    setHeroImageSrc(catActionImages[action]);
+    crossfadeToHeroImage(catActionImages[action]);
     revertTimerRef.current = setTimeout(revertHeroImage, CAT_ACTION_IMAGE_DURATION_MS);
-  };
-
-  const handleHeroImageError = () => {
-    if (heroImageSrc === CAT_HERO_IMAGE) {
-      setHeroError(true);
-      return;
-    }
-    revertHeroImage();
   };
 
   const bubbleMessage = interactionMessage ?? timeSlotMessage;
@@ -167,14 +259,47 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
     <section className="cat-section" style={catStyles.container}>
       <div style={catStyles.card}>
         <div style={catStyles.heroArea}>
+          <div style={catStyles.heroPreloadHidden} aria-hidden>
+            {catHeroImageSources.map((src) => (
+              <img key={src} src={src} alt="" decoding="async" />
+            ))}
+          </div>
           {!heroError ? (
-            <img
-              key={heroImageSrc}
-              src={heroImageSrc}
-              alt="행복냥이"
-              style={catStyles.heroImage}
-              onError={handleHeroImageError}
-            />
+            <div
+              className="cat-hero-image-stack"
+              style={catStyles.heroImageStack}
+            >
+              <img
+                ref={(el) => {
+                  heroLayerRefs.current[0] = el;
+                }}
+                src={heroLayers[0]}
+                alt={activeHeroLayer === 0 ? "행복냥이" : ""}
+                aria-hidden={activeHeroLayer !== 0}
+                decoding="async"
+                className={
+                  activeHeroLayer === 0
+                    ? "cat-hero-image-layer is-active"
+                    : "cat-hero-image-layer is-inactive"
+                }
+                style={catStyles.heroImageLayer}
+              />
+              <img
+                ref={(el) => {
+                  heroLayerRefs.current[1] = el;
+                }}
+                src={heroLayers[1]}
+                alt={activeHeroLayer === 1 ? "행복냥이" : ""}
+                aria-hidden={activeHeroLayer !== 1}
+                decoding="async"
+                className={
+                  activeHeroLayer === 1
+                    ? "cat-hero-image-layer is-active"
+                    : "cat-hero-image-layer is-inactive"
+                }
+                style={catStyles.heroImageLayer}
+              />
+            </div>
           ) : (
             <div style={catStyles.heroPlaceholder}>
               이미지를 넣어주세요
@@ -194,6 +319,7 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
                 {catActions.map((action) => {
                   const playLocked =
                     action.id === "play" && isPlayOnCooldown();
+                  const actionLocked = isInteractionBusy || playLocked;
                   const cooldownLabel =
                     action.id === "play" && playLocked
                       ? formatPlayCooldownRemaining(
@@ -206,23 +332,25 @@ const Cat = ({ onOpenDailyRecord }: CatProps) => {
                     <button
                       type="button"
                       className="cat-action-btn"
-                      disabled={playLocked}
+                      disabled={actionLocked}
                       onClick={() => handleAction(action.id)}
                       title={
-                        playLocked
-                          ? `${cooldownLabel} 후에 다시 놀아줄 수 있어요`
-                          : undefined
+                        isInteractionBusy
+                          ? "고양이가 반응하는 중이에요"
+                          : playLocked
+                            ? `${cooldownLabel} 후에 다시 놀아줄 수 있어요`
+                            : undefined
                       }
                       style={{
                         ...catStyles.actionButton,
                         width: "100%",
-                        ...(activeAction === action.id && !playLocked
+                        ...(activeAction === action.id && !actionLocked
                           ? catStyles.actionButtonActive
                           : {}),
-                        ...(playLocked ? catStyles.actionButtonDisabled : {}),
+                        ...(actionLocked ? catStyles.actionButtonDisabled : {}),
                       }}
                       aria-pressed={activeAction === action.id}
-                      aria-disabled={playLocked}
+                      aria-disabled={actionLocked}
                     >
                       <span style={catStyles.actionEmoji} aria-hidden>
                         {action.emoji}
